@@ -1,0 +1,173 @@
+<div class="header-container">
+    <h1 class="title header-font">Finance App</h1>
+    <ul class="nav body-font">
+        <li><a href="/">Home</a></li>
+        <li><a href="/transactions">Transactions</a></li>
+        <li class="focus"><a href="/reports">Reports</a></li>
+        <li><a href="/accounts">Accounts</a></li>
+    </ul>
+</div>
+
+<div class="widget-container">
+    <div class="button-group body-font">
+        <button onclick="changeReport('week')" id="weekBtn">Last Week</button>
+        <button onclick="changeReport('month')" id="monthBtn">Last Month</button>
+        <button onclick="changeReport('year')" id="yearBtn">Last Year</button>
+    </div>
+
+    <div class="line-chart-widget">
+        <h2 class="section-header">Balance Trends</h2>
+        <div class="line-chart" id="lineChart"></div>
+    </div>
+
+    <div class="pie-chart-widget">
+        <h2 class="section-header">Category Breakdown</h2>
+        <div class="pie-chart" id="pieChart"></div>
+    </div>
+</div>
+
+<script>
+    changeReport('week');
+
+    function changeReport(time) {
+        switch(time) {
+            case 'week':
+                document.getElementById("weekBtn").classList.add("focus");
+                document.getElementById("monthBtn").classList.remove("focus");
+                document.getElementById("yearBtn").classList.remove("focus");
+                break;
+            case 'month':
+                document.getElementById("weekBtn").classList.remove("focus");
+                document.getElementById("monthBtn").classList.add("focus");
+                document.getElementById("yearBtn").classList.remove("focus");
+                break;
+            case 'year':
+                document.getElementById("weekBtn").classList.remove("focus");
+                document.getElementById("monthBtn").classList.remove("focus");
+                document.getElementById("yearBtn").classList.add("focus");
+                break;
+            default:
+        }
+    }
+
+    google.charts.load('current',{packages:['corechart']});
+    google.charts.setOnLoadCallback(drawCharts);
+
+    function drawCharts() {
+        // Set Data
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'Balance'],
+            [new Date(2021, 11, 1), 7],
+            [new Date(2021, 11, 2), 8],
+            [new Date(2021, 11, 3), 8],
+            [new Date(2021, 11, 7), 9],
+            [new Date(2021, 11, 10), 9],
+            [new Date(2021, 11, 14), 9],
+            [new Date(2021, 11, 15), 10],
+            [new Date(2021, 11, 20), 11],
+            [new Date(2021, 11, 22), 14],
+            [new Date(2021, 11, 26), 14],
+            [new Date(2021, 11, 30), 15]
+        ]);
+
+        // Set Options
+        var options = {
+            backgroundColor: {
+                fill: "#121212",
+                fillOpacity: 1,
+            },
+            series: {
+                0: { color: "d53a9d" },
+            },
+            vAxis: {
+                baseline: 0,
+                textStyle: {
+                    color: '#eee',
+                },
+                gridlines: {
+                    color: '#444',
+                },
+                minorGridlines: {
+                    color: '#444',
+                },
+            },
+            hAxis: {
+                textStyle: {
+                    color: '#eee',
+                },
+                gridlines: {
+                    color: '#444',
+                },
+                minorGridlines: {
+                    color: '#444',
+                },
+                slantedText: true, 
+                slantedTextAngle: 10,
+                format: 'MMM dd'
+            },
+            chartArea: {
+                left: 25,
+                top: 5,
+                height: '80%',
+                width: '90%',
+                backgroundColor: {
+                    fill: '#232323',
+                    fillOpacity: 1,
+                }
+            },
+            legend: 'none'
+        };
+
+        // Draw Chart
+        var lineChart = new google.visualization.LineChart(document.getElementById('lineChart'));
+        lineChart.draw(data, options);
+
+        var data2 = google.visualization.arrayToDataTable([
+            ['Category', 'Expense'],
+            ['Rent',     11],
+            ['Eating out',      2],
+            ['Utilities',  2],
+            ['Entertainment', 2],
+            ['Transportation',    7]
+        ]);
+
+        var options2 = {
+            backgroundColor: {
+                fill: "transparent",
+                // fillOpacity: 1,
+            },
+            chartArea: {
+                left: 25,
+                top: 5,
+                width: '80%',
+                height: '80%',
+                backgroundColor: {
+                    fill: '#232323',
+                    fillOpacity: 1,
+                }
+            },
+            pieSliceBorderColor: "#121212",
+            legend: {
+                textStyle: {
+                    color: '#ddd',
+                },
+            },
+            colors: [
+                '#6426B5',
+                '#6F23A8',
+                '#7A1F9B',
+                '#851C8E',
+                '#901981',
+                '#9B1575',
+                '#A61268',
+                '#B10F5B',
+                '#BC0B4E',
+                '#C70841',
+            ]
+        };
+
+        var pieChart = new google.visualization.PieChart(document.getElementById('pieChart'));
+
+        pieChart.draw(data2, options2);
+    }
+</script>

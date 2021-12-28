@@ -1,0 +1,168 @@
+<div class="header-container">
+    <h1 class="title header-font">Finance App</h1>
+    <ul class="nav body-font">
+        <li class="focus"><a href="/">Home</a></li>
+        <li><a href="/transactions">Transactions</a></li>
+        <li><a href="/reports">Reports</a></li>
+        <li><a href="/accounts">Accounts</a></li>
+    </ul>
+</div>
+
+<div class="widget-container">
+    <h2 class="section-header">This Month's Totals:</h2>
+    <div class="totals">
+        <div>
+            <h2 class="count header-font">$420.69</h2>
+            <h3 class="body-font">Total Balance</h3>
+        </div>
+        <div>
+            <h2 class="count header-font">$420.69</h2>
+            <h3 class="body-font">Month's Income</h3>
+        </div>
+        <div>
+            <h2 class="count header-font">$420.69</h2>
+            <h3 class="body-font">Month's Expenses</h3>
+        </div>
+    </div>
+</div>
+
+<div class="widget-container">
+    <div class="transaction-container">
+        <h2 class="section-header">Add Transaction:</h2>
+        <form class="body-font"> 
+            <div class="row">
+                <div class="left">
+                    <label for="account">Account:</label>
+                </div>
+
+                <div class="right">
+                    <input list="accounts" type="text" name="account" id="account">
+                    <datalist id="accounts">
+                        <option value="Checking">
+                        <option value="Savings">
+                    </datalist>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="left">
+                    <label for="category">Category:</label>
+                </div>
+
+                <div class="right">
+                    <input list="categories" type="text" name="category" id="category">
+                    <datalist id="categories">
+                        <option value="Rent">
+                        <option value="Groceries">
+                        <option value="Coffee">
+                    </datalist>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="left">
+                    <label for="amount">Amount:</label>
+                </div>
+
+                <div class="right">
+                    <input type="number" step=".01" name="amount" id="amount">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="left">
+                    <label for="date">Date:</label>
+                </div>
+
+                <div class="right">
+                    <input type="date" name="date" id="date">
+                </div>
+            </div>
+
+            <div class="row">
+                <input type="submit">
+            </div>
+        </form>
+    </div>
+
+    <div class="report-container">
+        <h2 class="section-header">This Month's Trends:</h2>
+        <div class="chart" id="monthChart"></div>
+    </div>
+</div>
+
+<script>
+    google.charts.load('current',{packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        // Set Data
+        var data = google.visualization.arrayToDataTable([
+            ['Date', 'Balance'],
+            [new Date(2021, 11, 1), 7],
+            [new Date(2021, 11, 2), 8],
+            [new Date(2021, 11, 3), 8],
+            [new Date(2021, 11, 7), 9],
+            [new Date(2021, 11, 10), 9],
+            [new Date(2021, 11, 14), 9],
+            [new Date(2021, 11, 15), 10],
+            [new Date(2021, 11, 20), 11],
+            [new Date(2021, 11, 22), 14],
+            [new Date(2021, 11, 26), 14],
+            [new Date(2021, 11, 30), 15]
+        ]);
+
+        // Set Options
+        var options = {
+            backgroundColor: {
+                fill: "#121212",
+                fillOpacity: 1,
+            },
+            series: {
+                0: { color: "d53a9d" },
+            },
+            vAxis: {
+                baseline: 0,
+                textStyle: {
+                    color: '#eee',
+                },
+                gridlines: {
+                    color: '#444',
+                },
+                minorGridlines: {
+                    color: '#444',
+                },
+            },
+            hAxis: {
+                textStyle: {
+                    color: '#eee',
+                },
+                gridlines: {
+                    color: '#444',
+                },
+                minorGridlines: {
+                    color: '#444',
+                },
+                slantedText: true, 
+                slantedTextAngle: 10,
+                format: 'MMM dd'
+            },
+            chartArea: {
+                left: 25,
+                top: 5,
+                height: '80%',
+                width: '90%',
+                backgroundColor: {
+                    fill: '#232323',
+                    fillOpacity: 1,
+                }
+            },
+            legend: 'none'
+        };
+
+        // Draw Chart
+        var chart = new google.visualization.LineChart(document.getElementById('monthChart'));
+        chart.draw(data, options);
+    }
+</script>

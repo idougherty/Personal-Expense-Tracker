@@ -1,0 +1,53 @@
+<div class="header-container">
+    <h1 class="title header-font">Finance App</h1>
+    <ul class="nav body-font">
+        <li><a href="/">Home</a></li>
+        <li><a href="/transactions">Transactions</a></li>
+        <li><a href="/reports">Reports</a></li>
+        <li class="focus"><a href="/accounts">Accounts</a></li>
+    </ul>
+</div>
+
+<div class="widget-container">
+    <div class="account-list body-font">
+        <ul id="accountList">
+            <li><span>Checking</span><span>$2000</span><span>02/29/2021</span><span><a>edit</a> | <a>delete</a></span></li>
+            <li><span>Savings</span><span>$10</span><span>02/29/2021</span><span><a>edit</a> | <a>delete</a></span></li>
+        </ul>
+    </div>
+
+    <div class="new-account-container">
+        <h2 class="section-header">Create New Account</h2>
+
+        <form class="body-font"> 
+            <div class="row">
+                <div class="left">
+                    <label for="account">Name:</label>
+                </div>
+
+                <div class="right">
+                    <input list="accounts" type="text" name="account" id="account">
+                    <datalist id="accounts">
+                        <option value="Checking">
+                        <option value="Savings">
+                    </datalist>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="left">
+                    <label for="minAmount">Initial Deposit:</label>
+                </div>
+
+                <div class="right">
+                    <input type="number" step=".01" name="minAmount" id="minAmount">
+                </div>
+            </div>
+
+            <div class="row">
+                <input type="submit" value="Create Account">
+            </div>
+        </form>
+    </div>
+</div>

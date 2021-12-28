@@ -1,0 +1,45 @@
+.new-account-container {
+    float: left;
+    width: 35%;
+}
+
+.account-list {
+    float: right;
+    width: 60%;
+}
+
+.new-account-container > h2, .account-list > h2 {
+    margin-top: 0;
+}
+
+.account-list ul {
+    padding: 0;
+    margin: 0;
+    height: 500px;
+    overflow-y: scroll;
+    color: white;
+    list-style: none;
+}
+
+.account-list ul li {
+    padding: 10px;
+    display: flex;
+}
+
+.account-list ul li span {
+    width: 25%;
+    text-align: center;
+}
+
+.account-list ul li:nth-child(odd) {
+    background-color: #232323;
+}
+
+.account-list a {
+    color: #aaa;
+    cursor: pointer;
+}
+
+.account-list a:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,56 @@
+
+.button-group > * {
+    padding: 10px;
+    border-width: 0;
+    font-weight: bold;
+    font-size: 1em;
+    width: 33%;
+    box-sizing: border-box;
+    background-color: #444;
+    color: #121212;
+    cursor: pointer;
+}
+
+.button-group > :nth-child(1) {
+    border-radius: 5px 0 0 5px;
+}
+
+.button-group > :nth-child(3) {
+    border-radius: 0 5px 5px 0;
+}
+
+.focus#weekBtn {
+    background: linear-gradient(to right, #cb3aa3, #b13ab1);
+}
+
+.focus#monthBtn {
+    background: linear-gradient(to right, #b13ab1, #973ac0);
+}
+
+.focus#yearBtn {
+    background: linear-gradient(to right, #973ac0, #7e3acf);
+}
+
+.line-chart-widget {
+    float: left;
+    width: 47%;
+}
+
+.line-chart {
+    width: 100%;
+    aspect-ratio: 7/4;
+}
+
+.pie-chart-widget {
+    float: right;
+    width: 47%;
+}
+
+.pie-chart {
+    width: 100%;
+    aspect-ratio: 7/4;
+}
+
+svg > g > g:last-child {
+    pointer-events: none;
+}

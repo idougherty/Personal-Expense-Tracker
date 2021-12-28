@@ -1,0 +1,56 @@
+.totals {
+    display: flex;
+    justify-content: center;
+    background-color: #232323;
+    border-radius: 5px;
+}
+
+.totals > * {
+    width: 33%;
+    text-align: center;
+}
+
+.totals > :nth-child(1) {
+    border-right: 5px solid #b23ab2;
+    color: #ddd;
+}
+
+.totals > :nth-child(2) {
+    border-right: 5px solid #973ac0;
+    color: #81cc81;
+}
+
+.totals > :nth-child(3) {
+    color: #ff7676;
+}
+
+.totals > * > * {
+    margin: 10px 0;
+}
+
+.totals > * > h3 {
+    color: #ddd;
+    font-weight: normal;
+}
+
+.totals .count {
+    font-size: xx-large;
+}
+
+.transaction-container {
+    display: inline-block;
+    vertical-align: top;
+    width: 40%;
+}
+
+.report-container {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 4%;
+    width: 55%;
+}
+
+.report-container .chart {
+    width: 100%;
+    aspect-ratio: 7/4;
+}
