@@ -12,15 +12,15 @@
     <h2 class="section-header">This Month's Totals:</h2>
     <div class="totals">
         <div>
-            <h2 class="count header-font">$420.69</h2>
+            <h2 class="count header-font">$<%= "%.2f" % @total_balance %></h2>
             <h3 class="body-font">Total Balance</h3>
         </div>
         <div>
-            <h2 class="count header-font">$420.69</h2>
+            <h2 class="count header-font">$<%= "%.2f" % @month_income %></h2>
             <h3 class="body-font">Month's Income</h3>
         </div>
         <div>
-            <h2 class="count header-font">$420.69</h2>
+            <h2 class="count header-font">$<%= "%.2f" % @month_expense %></h2>
             <h3 class="body-font">Month's Expenses</h3>
         </div>
     </div>
@@ -29,65 +29,73 @@
 <div class="widget-container">
     <div class="transaction-container">
         <h2 class="section-header">Add Transaction:</h2>
-        <form class="body-font"> 
-            <div class="row">
-                <div class="left">
-                    <label for="account">Account:</label>
+        <%= form_with(model: @new_transaction, url: "/", method: "post") do |form| %>
+            <div class="body-font"> 
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :account_name, "Account:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.text_field :account_name, list: "accounts" %>
+                        <datalist id="accounts">
+                            <% @accounts.each do |account| %>
+                                <option value=<%=account[:name]%>>
+                            <% end %>
+                        </datalist>
+                    </div>
                 </div>
 
-                <div class="right">
-                    <input list="accounts" type="text" name="account" id="account">
-                    <datalist id="accounts">
-                        <option value="Checking">
-                        <option value="Savings">
-                    </datalist>
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :category, "Category:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.text_field :category, list: "categories" %>
+                        <datalist id="categories">
+                            <% @transactions.each do |transaction| %>
+                                <option value=<%=transaction[:classification]%>>
+                            <% end %>
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :amount, "Amount:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.number_field :amount, step: ".01" %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :date, "Date:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.date_field :date %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <%= form.submit "Create Transaction" %>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="category">Category:</label>
-                </div>
-
-                <div class="right">
-                    <input list="categories" type="text" name="category" id="category">
-                    <datalist id="categories">
-                        <option value="Rent">
-                        <option value="Groceries">
-                        <option value="Coffee">
-                    </datalist>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="amount">Amount:</label>
-                </div>
-
-                <div class="right">
-                    <input type="number" step=".01" name="amount" id="amount">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="date">Date:</label>
-                </div>
-
-                <div class="right">
-                    <input type="date" name="date" id="date">
-                </div>
-            </div>
-
-            <div class="row">
-                <input type="submit">
-            </div>
-        </form>
+        <% end %>
     </div>
 
     <div class="report-container">
         <h2 class="section-header">This Month's Trends:</h2>
         <div class="chart" id="monthChart"></div>
+        <%
+=begin%>
+ <%= var transactions = @transaction.to_json.html_safe %> 
+<%
+=end%>
     </div>
 </div>
 
@@ -96,7 +104,6 @@
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-
         // Set Data
         var data = google.visualization.arrayToDataTable([
             ['Date', 'Balance'],

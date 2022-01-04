@@ -1,3 +1,6 @@
+.button-group {
+    margin-bottom: 20px;
+}
 
 .button-group > * {
     padding: 10px;

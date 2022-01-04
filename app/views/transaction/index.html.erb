@@ -8,125 +8,115 @@
     </ul>
 </div>
 
-<div class="widget-container">
+<div class="wide-widget-container">
     <div class="query-options">
         <h2 class="section-header">Transaction List</h2>
+        <%= form_with(model: @q_transaction, url: transactions_path, method: "get") do |form| %>
+            <div class="body-font"> 
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :account_name, "Account:" %>
+                    </div>
 
-        <form class="body-font"> 
-            <div class="row">
-                <div class="left">
-                    <label for="account">Account:</label>
+                    <div class="right">
+                        <%= form.text_field :account_name, list: "accounts" %>
+                        <datalist id="accounts">
+                            <% @accounts.each do |account| %>
+                                <option value=<%=account[:name]%>>
+                            <% end %>
+                        </datalist>
+                    </div>
                 </div>
 
-                <div class="right">
-                    <input list="accounts" type="text" name="account" id="account">
-                    <datalist id="accounts">
-                        <option value="Checking">
-                        <option value="Savings">
-                    </datalist>
+                <div class="row">
+                    <div class="left">
+                        <label for="category">Category:</label>
+                    </div>
+
+                    <div class="right">
+                        <%= form.text_field :category, list: "categories" %>
+                        <datalist id="categories">
+                            <% @transactions.each do |transaction| %>
+                                <option value=<%=transaction[:classification]%>>
+                            <% end %>
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :minAmount, "Min Amount:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.number_field :minAmount, step: ".01" %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :minAmount, "Max Amount:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.number_field :maxAmount, step: ".01" %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :minDate, "Start Date:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.date_field :minDate %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :maxDate, "End Date:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.date_field :maxDate %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :count, "View Limit:" %>
+                    </div>
+
+                    <div class="right">
+                        <%= form.number_field :count, step: "1", value: "20" %>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <input type="submit" value="Search">
                 </div>
             </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="category">Category:</label>
-                </div>
-
-                <div class="right">
-                    <input list="categories" type="text" name="category" id="category">
-                    <datalist id="categories">
-                        <option value="Rent">
-                        <option value="Groceries">
-                        <option value="Coffee">
-                    </datalist>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="minAmount">Min Amount:</label>
-                </div>
-
-                <div class="right">
-                    <input type="number" step=".01" name="minAmount" id="minAmount">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="maxAmount">Max Amount:</label>
-                </div>
-
-                <div class="right">
-                    <input type="number" step=".01" name="maxAmount" id="maxAmount">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="date">Start Date:</label>
-                </div>
-
-                <div class="right">
-                    <input type="date" name="date" id="date">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="left">
-                    <label for="date">End Date:</label>
-                </div>
-
-                <div class="right">
-                    <input type="date" name="date" id="date">
-                </div>
-            </div>
-
-            <div class="row">
-                <input type="submit" value="Search">
-            </div>
-        </form>
+        <% end %>
     </div>
     
     <div class="transaction-list body-font">
         <ul id="transactionList">
+            <% @queried_transactions.each_with_index do |transaction, index| %>
+                <li>
+                    <span class=<%= (transaction[:amount] > 0) ? "income" : "expense" %>>$<%= "%.2f" % transaction[:amount].abs %></span>
+                    <span><%= transaction[:classification] %></span>
+                    <span><%= Account.find(transaction[:account_id])[:name] %></span>
+                    <span><%= transaction[:date].strftime('%F') %></span>
+                    <span>
+                        <a onclick="editAttributes(<%=index%>, <%=transaction[:id]%>);">edit</a>
+                         | 
+                        <%= link_to 'delete', transactions_path(:transaction_id => transaction[:id]), method: "delete", data: { confirm: 'Are you sure?' } %>
+                    </span>
+                </li>
+            <% end %>
         </ul>
     </div>
 </div>
 
-<script>
-    for(let i = 0; i < 25; i++) {
-        let item = document.createElement("li");
-
-        let num = Math.floor((Math.random() - .5) * 10000)/100;
-        let amount = document.createElement("span");
-        amount.appendChild(document.createTextNode("$"+Math.abs(num)));
-        amount.classList.add(num < 0 ? "expense" : "income");
-
-        let account = document.createElement("span");
-        account.appendChild(document.createTextNode("Checking"));
-
-        let category = document.createElement("span");
-        category.appendChild(document.createTextNode("Groceries"));
-
-        let date = document.createElement("span");
-        date.appendChild(document.createTextNode("12/06/21"));
-
-        let editLink = document.createElement("a");
-        let delLink = document.createElement("a");
-        editLink.appendChild(document.createTextNode("edit"));
-        delLink.appendChild(document.createTextNode("delete"));
-        let editDel = document.createElement("span");
-        editDel.appendChild(editLink);
-        editDel.appendChild(document.createTextNode(" | "));
-        editDel.appendChild(delLink);
-
-        item.appendChild(amount);
-        item.appendChild(account);
-        item.appendChild(category);
-        item.appendChild(date);
-        item.appendChild(editDel);
-
-        document.getElementById("transactionList").appendChild(item);
-    }
-</script>
+<%= javascript_pack_tag 'transaction' %>

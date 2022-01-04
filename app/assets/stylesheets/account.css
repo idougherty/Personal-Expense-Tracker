@@ -8,10 +8,6 @@
     width: 60%;
 }
 
-.new-account-container > h2, .account-list > h2 {
-    margin-top: 0;
-}
-
 .account-list ul {
     padding: 0;
     margin: 0;
@@ -22,8 +18,9 @@
 }
 
 .account-list ul li {
-    padding: 10px;
     display: flex;
+    height: 50px;
+    line-height: 50px;
 }
 
 .account-list ul li span {
@@ -38,6 +35,7 @@
 .account-list a {
     color: #aaa;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .account-list a:hover {

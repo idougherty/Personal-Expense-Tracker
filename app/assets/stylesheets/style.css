@@ -1,7 +1,8 @@
 body {
     margin: 0;
-    background-color: #0a0a0a;
+    background-color: #000;
     overflow: hidden;
+    color: #eee;
 }
 
 .container {
@@ -13,6 +14,7 @@ body {
     padding: 0 20px 50px 20px;
     background-color: #121212;
     border-radius: 10px;
+    box-shadow: 0 0 10px #d39;
 }
 
 .widget-container {
@@ -20,9 +22,15 @@ body {
     margin: 40px auto 0 auto;
 }
 
+.wide-widget-container {
+    width: 95%;
+    margin: 40px auto 0 auto;
+}
+
 .section-header {
     font-family: 'Montserrat', sans-serif;
     color: #d53a9d;
+    margin-top: 0;
 }
 
 .header-font {
@@ -103,19 +111,16 @@ label {
 }
 
 input {
-    padding: 10px;
+    padding: 5px;
     border-radius: 3px;
     border-style: solid;
     border-color: #0000;
     font-family: 'Roboto', sans-serif;
     font-weight: bold;
     font-size: 1em;
-    width: 100%;
+    width: 98%;
     box-sizing: border-box;
-}
-
-input {
-    background-color: #232323;
+    background-color: #ffffff1a;
     color: #ddd;
 }
 

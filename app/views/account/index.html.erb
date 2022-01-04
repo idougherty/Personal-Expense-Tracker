@@ -11,43 +11,56 @@
 <div class="widget-container">
     <div class="account-list body-font">
         <ul id="accountList">
-            <li><span>Checking</span><span>$2000</span><span>02/29/2021</span><span><a>edit</a> | <a>delete</a></span></li>
-            <li><span>Savings</span><span>$10</span><span>02/29/2021</span><span><a>edit</a> | <a>delete</a></span></li>
+            <% @accounts.each_with_index do |account, index| %>
+                <li>
+                    <span><%= account[:name] %></span>
+                    <span>$<%= "%.2f" % account[:balance] %></span>
+                    <span><%= account[:created_at].strftime('%F') %></span>
+                    <span>
+                        <a onclick="editAttributes(<%=index%>, <%=account[:id]%>);">edit</a>
+                         | 
+                        <%= link_to 'delete', accounts_path(:account_id => account[:id]), method: "delete", data: { confirm: 'Are you sure?' } %>
+                    </span>
+                </li>
+            <% end %>
         </ul>
     </div>
 
     <div class="new-account-container">
         <h2 class="section-header">Create New Account</h2>
+        <%= form_with(model: @new_account, url: accounts_path, method: "post") do |form| %>
+            <div class="body-font">
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :name, "Type:" %>
+                    </div>
 
-        <form class="body-font"> 
-            <div class="row">
-                <div class="left">
-                    <label for="account">Name:</label>
+                    <div class="right">
+                        <%= form.text_field :name, list: "accounts" %>
+                        <datalist id="accounts">
+                            <option value="Checking">
+                            <option value="Savings">
+                        </datalist>
+                    </div> 
                 </div>
 
-                <div class="right">
-                    <input list="accounts" type="text" name="account" id="account">
-                    <datalist id="accounts">
-                        <option value="Checking">
-                        <option value="Savings">
-                    </datalist>
+
+                <div class="row">
+                    <div class="left">
+                        <%= form.label :balance, "Initial Deposit:" %>
+                    </div>
+                    
+                    <div class="right">
+                        <%= form.number_field :balance, step: ".01" %>
+                    </div> 
+                </div>
+                
+                <div class="row">
+                    <%= form.submit "Create Account" %>
                 </div>
             </div>
-
-
-            <div class="row">
-                <div class="left">
-                    <label for="minAmount">Initial Deposit:</label>
-                </div>
-
-                <div class="right">
-                    <input type="number" step=".01" name="minAmount" id="minAmount">
-                </div>
-            </div>
-
-            <div class="row">
-                <input type="submit" value="Create Account">
-            </div>
-        </form>
+        <% end %>
     </div>
 </div>
+
+<%= javascript_pack_tag 'account' %>

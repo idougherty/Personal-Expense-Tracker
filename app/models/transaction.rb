@@ -1,6 +1,5 @@
 class Transaction < ApplicationRecord
     attr_accessor :amount, :date, :classification
-
     belongs_to :account
 
     def editAmount=(amt)

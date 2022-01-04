@@ -1,15 +1,12 @@
 .query-options {
     float: left;
-    width: 35%;
-}
-
-.query-options h2 {
-    margin-top: 0;
+    width: 27%;
 }
 
 .transaction-list {
     float: right;
-    width: 60%;
+    width: 70%;
+    /* font-size: small; */
 }
 
 .transaction-list ul {
@@ -22,8 +19,9 @@
 }
 
 .transaction-list ul li {
-    padding: 10px;
     display: flex;
+    height: 50px;
+    line-height: 50px;
 }
 
 .transaction-list ul li span {
@@ -38,6 +36,7 @@
 .transaction-list a {
     color: #aaa;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .transaction-list a:hover {
